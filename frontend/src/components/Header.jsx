@@ -106,33 +106,50 @@ export const Header = ({ activeSection, setSection }) => {
               initial={{ opacity: 0, y: -15, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -15, scale: 0.98 }}
-              className="absolute top-[calc(100%+8px)] left-0 w-full glass-card overflow-hidden md:hidden rounded-2xl border border-white/10 z-50"
+              className="absolute top-[calc(100%+8px)] left-0 w-full bg-[#0A0A16]/95 backdrop-blur-2xl overflow-hidden md:hidden rounded-2xl border border-primary/20 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_20px_rgba(0,229,255,0.05),inset_0_1px_1px_rgba(255,255,255,0.05)] z-50"
             >
               <div className="p-4 flex flex-col gap-1.5">
                 {navItems.map((item, i) => (
                   <motion.button
                     initial={{ x: -10, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: i * 0.05 }}
+                    whileHover={{ x: 6 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ 
+                      type: "spring", 
+                      stiffness: 300, 
+                      damping: 20, 
+                      delay: i * 0.04 
+                    }}
                     key={item.id}
                     onClick={() => {
                       setSection(item.id);
                       setIsMobileMenuOpen(false);
                     }}
-                    className={`text-left p-3.5 rounded-xl text-sm font-tech font-bold uppercase tracking-wider transition-colors ${
+                    className={`text-left p-3.5 rounded-xl text-sm font-tech font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
                       activeSection === item.id
-                        ? "bg-primary text-black"
-                        : "text-slate-400 hover:bg-white/5 hover:text-white"
+                        ? "bg-primary text-black font-extrabold shadow-[0_0_20px_rgba(0,229,255,0.3)] border-l-4 border-primary/80"
+                        : "text-slate-300 hover:bg-primary/10 hover:text-primary border-l-4 border-transparent hover:border-primary/50"
                     }`}
                   >
-                    {item.label}
+                    <span className="flex items-center justify-between">
+                      {item.label}
+                      {activeSection === item.id && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-black animate-ping" />
+                      )}
+                    </span>
                   </motion.button>
                 ))}
                 <motion.button
                   initial={{ y: 10, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: navItems.length * 0.05 }}
-                  className="mt-3 w-full bg-primary text-black py-4 rounded-xl font-tech font-bold uppercase tracking-widest text-sm"
+                  whileHover={{
+                    scale: 1.02,
+                    boxShadow: "0 0 25px rgba(0, 229, 255, 0.5)",
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ delay: navItems.length * 0.04 }}
+                  className="mt-3.5 w-full bg-primary text-black py-4 rounded-xl font-tech font-bold uppercase tracking-widest text-sm shadow-[0_4px_15px_rgba(0,229,255,0.2)] transition-all cursor-pointer"
                 >
                   Hire Me
                 </motion.button>

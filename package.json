@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Root package manager for fullstack MERN portfolio project",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
     "build": "cd frontend && npm install && npm run build",
