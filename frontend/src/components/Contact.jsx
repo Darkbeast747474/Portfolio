@@ -25,7 +25,12 @@ export const Contact = () => {
     setStatus({ type: null, text: "" });
 
     // Client-side validations
-    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.subject ||
+      !formData.message
+    ) {
       setStatus({ type: "error", text: "All fields are required." });
       setLoading(false);
       return;
@@ -45,7 +50,9 @@ export const Contact = () => {
       if (response.ok) {
         setStatus({
           type: "success",
-          text: data.message || "Thank you! Your message has been sent successfully.",
+          text:
+            data.message ||
+            "Thank you! Your message has been sent successfully.",
         });
         setFormData({ name: "", email: "", subject: "", message: "" });
       } else {
@@ -69,15 +76,17 @@ export const Contact = () => {
     <section className="min-h-screen flex items-center justify-center py-32 px-6 relative z-10">
       <div className="glass-card p-8 md:p-12 rounded-3xl max-w-2xl w-full text-center relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-60"></div>
-        
+
         <div className="w-20 h-20 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-6 relative">
           <div className="absolute inset-0 bg-primary/20 blur-md rounded-full"></div>
           <Mail className="w-8 h-8 text-primary relative z-10" />
         </div>
-        <h2 className="text-4xl md:text-6xl font-display tracking-widest uppercase mb-2 text-white">Let's Work Together</h2>
+        <h2 className="text-4xl md:text-6xl font-display tracking-widest uppercase mb-2 text-white">
+          Let's Work Together
+        </h2>
         <p className="text-slate-400 font-body text-sm md:text-base mb-8 max-w-md mx-auto leading-relaxed">
-          Need custom dashboards, statistical analytics, or automated ETL pipelines?
-          Drop me a message and let's collaborate!
+          Need custom dashboards, statistical analytics, or automated ETL
+          pipelines? Drop me a message and let's collaborate!
         </p>
 
         {status.text && (
@@ -93,14 +102,19 @@ export const Contact = () => {
             ) : (
               <AlertCircle className="w-5 h-5 flex-shrink-0 text-rose-400" />
             )}
-            <p className="text-xs font-tech font-bold uppercase tracking-wider">{status.text}</p>
+            <p className="text-xs font-tech font-bold uppercase tracking-wider">
+              {status.text}
+            </p>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5 text-left">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="name" className="block text-[10px] font-tech font-bold text-slate-500 uppercase tracking-widest mb-2">
+              <label
+                htmlFor="name"
+                className="block text-[10px] font-tech font-bold text-slate-500 uppercase tracking-widest mb-2"
+              >
                 Your Name
               </label>
               <input
@@ -109,13 +123,16 @@ export const Contact = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="Deepak Kaushal"
+                placeholder="Enter your name"
                 className="w-full h-12 glass-input rounded-xl px-4 text-white placeholder-slate-600 focus:outline-none transition-all text-sm font-body"
                 required
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-[10px] font-tech font-bold text-slate-500 uppercase tracking-widest mb-2">
+              <label
+                htmlFor="email"
+                className="block text-[10px] font-tech font-bold text-slate-500 uppercase tracking-widest mb-2"
+              >
                 Email Address
               </label>
               <input
@@ -124,7 +141,7 @@ export const Contact = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="deepak@example.com"
+                placeholder="abc@example.com"
                 className="w-full h-12 glass-input rounded-xl px-4 text-white placeholder-slate-600 focus:outline-none transition-all text-sm font-body"
                 required
               />
@@ -132,7 +149,10 @@ export const Contact = () => {
           </div>
 
           <div>
-            <label htmlFor="subject" className="block text-[10px] font-tech font-bold text-slate-500 uppercase tracking-widest mb-2">
+            <label
+              htmlFor="subject"
+              className="block text-[10px] font-tech font-bold text-slate-500 uppercase tracking-widest mb-2"
+            >
               Subject
             </label>
             <input
@@ -148,7 +168,10 @@ export const Contact = () => {
           </div>
 
           <div>
-            <label htmlFor="message" className="block text-[10px] font-tech font-bold text-slate-500 uppercase tracking-widest mb-2">
+            <label
+              htmlFor="message"
+              className="block text-[10px] font-tech font-bold text-slate-500 uppercase tracking-widest mb-2"
+            >
               Message
             </label>
             <textarea
