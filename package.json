@@ -4,11 +4,9 @@
   "description": "Root package manager for fullstack MERN portfolio project",
   "private": true,
   "scripts": {
-    "postinstall": "npm run install-all",
-    "install-all": "npm install --prefix frontend && npm install --prefix backend",
-    "frontend": "npm run dev --prefix frontend",
-    "backend": "npm run dev --prefix backend",
-    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "build": "cd frontend && npm install && npm run build",
+    "install": "cd frontend && npm install && cd ../backend && npm install"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
