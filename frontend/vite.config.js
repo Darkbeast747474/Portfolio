@@ -4,9 +4,11 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
+  build: {
+    outDir: "dist", // ← Vercel expects frontend/dist
+  },
   server: {
     proxy: {
-      // Only active during local dev
       "/api": "http://localhost:5000",
     },
   },
