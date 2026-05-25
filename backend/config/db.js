@@ -5,7 +5,10 @@ const MONGO_URI = process.env.MONGO_URI;
 // Prevent Mongoose from buffering queries endlessly if the connection drops
 const options = {
   bufferCommands: false,
-  serverSelectionTimeoutMS: 5000, // Timeout after 5 seconds instead of Vercel's 10
+  serverSelectionTimeoutMS: 5000, // Keeps Vercel from hanging for 10 seconds
+  family: 4, // 🟢 CRITICAL: Forces Node 24 to resolve via IPv4 instead of IPv6
+  retryWrites: true,
+  w: "majority",
 };
 
 // Use a global variable to preserve the connection across serverless warm-starts
