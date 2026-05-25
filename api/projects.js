@@ -1,40 +1,45 @@
 import mongoose from "mongoose";
 import Project from "../backend/models/Project.js";
 
-// Safe fallback for environment variable naming conventions
 const MONGO_URI = process.env.MONGO_URI || process.env.MONGODB_URI;
 
-// Production serverless network optimizations
+mongoose.set("bufferCommands", false); // ✅ Must be BEFORE any model usage
+
 const options = {
-  bufferCommands: false, // Crash immediately if the connection drops instead of freezing
-  serverSelectionTimeoutMS: 5000, // Terminate connection attempts at 5 seconds max
-  family: 4, // Force IPv4 resolution to prevent Node 24 DNS hangs
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 10000,
+  family: 4,
   retryWrites: true,
   w: "majority",
 };
 
-let cached = global.mongoose;
-
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
+let cached =
+  global.mongoose ?? (global.mongoose = { conn: null, promise: null });
 
 async function connectDB() {
-  if (cached.conn) return cached.conn;
+  if (cached.conn) {
+    // ✅ Verify the cached connection is still alive
+    if (cached.conn.connection.readyState === 1) return cached.conn;
+    // If not, reset and reconnect
+    cached.conn = null;
+    cached.promise = null;
+  }
+
+  if (!MONGO_URI) {
+    throw new Error("MONGO_URI environment variable is missing!");
+  }
 
   if (!cached.promise) {
-    if (!MONGO_URI) {
-      throw new Error("MONGO_URI environment variable is missing!");
-    }
-    cached.promise = mongoose.connect(MONGO_URI, options).then((m) => m);
+    cached.promise = mongoose
+      .connect(MONGO_URI, options)
+      .then((m) => m)
+      .catch((err) => {
+        cached.promise = null; // ✅ Reset so next request retries fresh
+        throw err;
+      });
   }
 
-  try {
-    cached.conn = await cached.promise;
-  } catch (e) {
-    cached.promise = null; // Reset cache state on failure so subsequent requests can retry
-    throw e;
-  }
+  cached.conn = await cached.promise;
   return cached.conn;
 }
 

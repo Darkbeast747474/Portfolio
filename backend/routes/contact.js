@@ -1,5 +1,5 @@
 import express from "express";
-import { Message } from "../models/Message.js";
+import Message from "../models/Message.js";
 
 const router = express.Router();
 
@@ -17,20 +17,22 @@ router.post("/", async (req, res) => {
       name,
       email,
       subject,
-      message
+      message,
     });
 
     const savedMessage = await newMessage.save();
     console.log(`New contact message received from ${name} (${email})`);
-    
+
     res.status(201).json({
       success: true,
       message: "Message received! Thank you for reaching out.",
-      data: savedMessage
+      data: savedMessage,
     });
   } catch (error) {
     console.error(`Error saving message: ${error.message}`);
-    res.status(500).json({ message: "Server error saving message", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Server error saving message", error: error.message });
   }
 });
 
