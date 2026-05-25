@@ -85,8 +85,8 @@ export const Contact = () => {
           Let's Work Together
         </h2>
         <p className="text-slate-400 font-body text-sm md:text-base mb-8 max-w-md mx-auto leading-relaxed">
-          Need custom dashboards, statistical analytics, or automated ETL
-          pipelines? Drop me a message and let's collaborate!
+          Need custom dashboards or statistical analytics? Drop me a message and
+          let's collaborate!
         </p>
 
         {status.text && (

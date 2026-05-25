@@ -38,45 +38,49 @@ export const Header = ({ activeSection, setSection }) => {
         }}
         className="w-full max-w-7xl pointer-events-auto border rounded-2xl md:rounded-full px-6 py-3 md:py-3.5 backdrop-blur-xl flex items-center justify-between transition-all duration-300 relative"
       >
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="flex items-center gap-3 cursor-pointer"
-          onClick={() => setSection("home")}
-        >
-          <div className="text-primary relative">
-            <BarChart3 className="w-7 h-7 relative z-10" />
-            <div className="absolute inset-0 bg-primary/20 blur-lg rounded-full"></div>
-          </div>
-          <h2 className="text-2xl font-display tracking-widest text-white hidden sm:block">
-            DEEPAK KAUSHAL
-          </h2>
-        </motion.div>
+        <div className="flex-1 flex justify-start items-center">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center gap-3 cursor-pointer"
+            onClick={() => setSection("home")}
+          >
+            <div className="text-primary relative">
+              <BarChart3 className="w-7 h-7 relative z-10" />
+              <div className="absolute inset-0 bg-primary/20 blur-lg rounded-full"></div>
+            </div>
+            <h2 className="text-2xl font-display tracking-widest text-white hidden sm:block">
+              DEEPAK KAUSHAL
+            </h2>
+          </motion.div>
+        </div>
 
-        <nav className="hidden md:flex items-center gap-1 bg-white/5 p-1 rounded-full border border-white/5">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setSection(item.id)}
-              className={`relative px-5 py-2 text-xs font-tech font-bold uppercase tracking-wider transition-colors z-10 ${
-                activeSection === item.id
-                  ? "text-black"
-                  : "text-slate-400 hover:text-white"
-              }`}
-            >
-              {activeSection === item.id && (
-                <motion.div
-                  layoutId="activeNav"
-                  className="absolute inset-0 bg-primary rounded-full -z-10"
-                  transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
-                />
-              )}
-              {item.label}
-            </button>
-          ))}
-        </nav>
+        <div className="hidden md:flex justify-center flex-initial">
+          <nav className="flex items-center gap-1 bg-white/5 p-1 rounded-full border border-white/5">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setSection(item.id)}
+                className={`relative px-5 py-2 text-xs font-tech font-bold uppercase tracking-wider transition-colors z-10 ${
+                  activeSection === item.id
+                    ? "text-black"
+                    : "text-slate-400 hover:text-white"
+                }`}
+              >
+                {activeSection === item.id && (
+                  <motion.div
+                    layoutId="activeNav"
+                    className="absolute inset-0 bg-primary rounded-full -z-10"
+                    transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+                  />
+                )}
+                {item.label}
+              </button>
+            ))}
+          </nav>
+        </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex-1 flex justify-end items-center gap-4">
           <motion.button
             whileHover={{
               scale: 1.05,
@@ -84,6 +88,7 @@ export const Header = ({ activeSection, setSection }) => {
             }}
             whileTap={{ scale: 0.95 }}
             className="hidden md:block bg-primary text-black px-6 py-2 rounded-full text-xs font-tech font-bold uppercase tracking-widest transition-all cursor-pointer"
+            onClick={() => setSection("contact")}
           >
             Hire Me
           </motion.button>
@@ -150,6 +155,10 @@ export const Header = ({ activeSection, setSection }) => {
                   whileTap={{ scale: 0.98 }}
                   transition={{ delay: navItems.length * 0.04 }}
                   className="mt-3.5 w-full bg-primary text-black py-4 rounded-xl font-tech font-bold uppercase tracking-widest text-sm shadow-[0_4px_15px_rgba(0,229,255,0.2)] transition-all cursor-pointer"
+                  onClick={() => {
+                    setSection("contact");
+                    setIsMobileMenuOpen(false);
+                  }}
                 >
                   Hire Me
                 </motion.button>
